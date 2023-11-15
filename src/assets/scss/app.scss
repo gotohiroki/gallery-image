@@ -1,0 +1,80 @@
+@import './module/functions.scss';
+/* -- リセット系 -- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overscroll-behavior: none;
+}
+
+li{
+  list-style: none;
+}
+
+#webgl {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+
+  & canvas {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+$glidGap: 60px;
+$glidSpGap: 40px;
+$itemWidth: 380;
+$itemHeight: 280;
+$itemSpWidth: 380 * 1.6;
+$itemSpHeight: 280 * 1.6;
+$gridSideNum: 4; // 横並びの数
+
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, #{vw($itemWidth)});
+  grid-row-gap: $glidGap;
+  grid-column-gap: $glidGap;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  width: calc((#{vw($itemWidth)} * #{$gridSideNum}) + (#{$glidGap} * (#{$gridSideNum} - 1.0)));
+  padding:$glidGap * 0.5;
+  box-sizing: content-box;
+
+  @media (max-width: 767px){
+    grid-template-columns: repeat(auto-fit, #{vw_sp($itemSpWidth)});
+    grid-row-gap: $glidSpGap;
+    grid-column-gap: $glidSpGap;
+    width: calc((#{vw_sp($itemSpWidth)} * #{$gridSideNum}) + (#{$glidSpGap} * (#{$gridSideNum} - 1.0)));
+    padding:$glidSpGap * 0.5;
+  }
+}
+
+.item {
+  width: vw($itemWidth);
+  height: vw($itemHeight);
+  background: #000;
+  opacity: 0;
+
+  @media (max-width: 767px){
+    width: vw_sp($itemSpWidth);
+    height: vw_sp($itemSpHeight);
+  }
+}
+
+
+.item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
